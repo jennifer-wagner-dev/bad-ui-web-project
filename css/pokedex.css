@@ -1,0 +1,1285 @@
+/* =========================================================
+   PokéMeldeamt – Pokédex-Auswahl, Formular, Prüfung und Bericht
+   Diese Datei gestaltet die großen Projektseiten nach der Startseite.
+   ========================================================= */
+
+/* Pokédex-Auswahlseite: äußerer Container für Header, Suchfeld, Pokémon-Grid und Auswahl-Dock */
+.pokemon-select-board.pokedex-machine {
+    width: min(1280px, 100%);
+    padding: 0;
+    border: 4px solid var(--border);
+    border-radius: 28px;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+/* Roter Kopfbereich der Pokémon-Auswahl: links die Pokédex-Lichter, rechts Titel und Erklärung */
+.pokedex-machine__header {
+    max-width: none;
+    margin: 0;
+    padding: 1.3rem 1.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+
+    border-bottom: 4px solid var(--border);
+    background: var(--red);
+    color: var(--white);
+
+    text-align: left;
+}
+
+/* Kleines Retro-Label im roten Pokédex-Header: wird gelb dargestellt, damit es sich deutlich abhebt */
+.pokedex-machine__header .retro-label {
+    margin-bottom: 0.55rem;
+    color: var(--yellow);
+}
+
+/* Hauptüberschrift im Header der Pokémon-Auswahlseite */
+.pokedex-machine__header h1 {
+    color: var(--white);
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    line-height: 1.25;
+}
+
+/* Erklärungstext unter der Überschrift im Header */
+.pokedex-machine__header p:last-child {
+    max-width: 46rem;
+    margin: 0.7rem 0 0;
+    color: var(--white);
+
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+/* Bereich für die kleinen Pokédex-Kontrollleuchten links im Header */
+.pokedex-machine__lights {
+    display: flex;
+    gap: 0.45rem;
+    padding-top: 0.25rem;
+}
+
+/* Grundform einer Pokédex-Kontrollleuchte */
+.pokedex-light {
+    width: 1.1rem;
+    height: 1.1rem;
+    display: inline-block;
+
+    border: 3px solid var(--border);
+    border-radius: 50%;
+    background: var(--white);
+}
+
+
+/* Blaue Kontrollleuchte im Pokédex-Header */
+.pokedex-light--blue {
+    background: var(--blue);
+}
+
+/* Rote Kontrollleuchte im Pokédex-Header */
+.pokedex-light--red {
+    background: var(--red-dark);
+}
+
+/* Gelbe Kontrollleuchte im Pokédex-Header */
+.pokedex-light--yellow {
+    background: var(--yellow);
+}
+
+/* Inhaltsbereich der Pokédex-Maschine: enthält Systemmeldung, Suche und Pokémon-Grid */
+.pokedex-machine__body {
+    padding: 1.5rem;
+    background: var(--white);
+}
+
+
+/* Systemmeldung innerhalb der Pokédex-Maschine nimmt die volle Breite ein */
+.pokedex-machine .terminal-alert {
+    width: 100%;
+    margin: 0 0 1.25rem;
+}
+
+/* Abstand unter der Toolbar mit dem Suchfeld */
+.pokedex-machine .pokedex-toolbar {
+    margin-bottom: 1.4rem;
+}
+
+/* Suchfeld zum Filtern der Pokémon-Liste */
+.pokedex-search {
+    min-height: 3rem;
+    border: 3px solid var(--border);
+    border-radius: 16px;
+    background: var(--paper);
+    color: var(--text);
+    font-weight: 800;
+}
+
+/* Fokus-Zustand des Suchfelds: blauer Rahmen statt Browser-Standardschatten */
+.pokedex-search:focus {
+    border-color: var(--blue);
+    box-shadow: none;
+}
+
+/* Responsives Pokémon-Raster: Karten ordnen sich je nach verfügbarer Breite automatisch an */
+.pokedex-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.6rem;
+}
+
+/* Einzelne Pokémon-Karte im Raster: als Button klickbar und im Pokédex-Kartenstil gestaltet */
+.pokemon-card-button {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 14rem;
+    padding: 0;
+    border: 3px solid var(--border);
+    border-radius: 20px;
+    background: var(--paper);
+    overflow: hidden;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Hover- und Auswahlzustand der Pokémon-Karte: markiert die Karte gelb */
+.pokemon-card-button:hover,
+.pokemon-card-button.selected {
+    background: var(--yellow);
+}
+
+/* Kopfzeile jeder Pokémon-Karte: zeigt Nummer und Scan-Information */
+.pokemon-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.65rem 0.75rem;
+    border-bottom: 3px solid var(--border);
+    background: var(--red);
+    color: var(--white);
+    font-family: "PKMN RBYGSC", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+}
+
+
+/* Bildschirmbereich der Karte: hier wird das Pokémon-Bild zentriert angezeigt */
+.pokemon-card-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 7.2rem;
+    background: var(--white);
+}
+
+/* Pokémon-Bild wird im Pixel-Look angezeigt und vor dem Aufdecken als schwarze Silhouette dargestellt */
+.pokemon-card-screen img {
+    width: 6.2rem;
+    height: 6.2rem;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: brightness(0);
+}
+
+/* Aufgedeckte oder ausgewählte Pokémon werden nicht mehr als Silhouette angezeigt */
+.pokemon-card-button.revealed .pokemon-card-screen img,
+.pokemon-card-button.selected .pokemon-card-screen img {
+    filter: none;
+}
+
+/* Unterer Textbereich der Pokémon-Karte */
+.pokemon-card-body {
+    padding: 0.8rem;
+}
+
+/* Pokémon-Name ist vor dem Aufdecken verschwommen, damit die Karte wie ein Scan wirkt */
+.pokemon-card-name {
+    margin: 0;
+    color: var(--text);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: normal;
+    filter: blur(4px);
+    user-select: none;
+}
+
+/* Nach dem Aufdecken oder Auswählen wird der Pokémon-Name lesbar */
+.pokemon-card-button.revealed .pokemon-card-name,
+.pokemon-card-button.selected .pokemon-card-name {
+    filter: none;
+}
+
+/* Bereich für die Typ-Badges innerhalb der Pokémon-Karte */
+.pokemon-card-types {
+    min-height: 1.6rem;
+    margin-top: 0.5rem;
+}
+
+/* Auswahl-Dock: schwebt unten auf der Pokémon-Auswahlseite und zeigt die aktuelle Auswahl */
+.selection-dock {
+    position: fixed;
+    left: 50%;
+    bottom: 1rem;
+    z-index: 20;
+    width: min(980px, calc(100% - 2rem));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transform: translateX(-50%);
+    padding: 0.85rem;
+    border: 4px solid var(--border);
+    border-radius: 22px;
+    background: var(--screen);
+    color: var(--white);
+}
+
+/* Linker Bereich im Dock: enthält Bild, Nummer, Namen, Typen und Statusmeldung des Pokémon */
+.selection-dock__pokemon {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+/* Pokémon-Bild im Auswahl-Dock wird klein und im Pixel-Look angezeigt */
+.selection-dock img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* Name des aktuell ausgewählten Pokémon im Dock */
+.selection-dock h2 {
+    font-size: 1.2rem;
+    font-weight: 950;
+    margin: 0;
+}
+
+/* Statusmeldung im Dock, z. B. ob ein Pokémon ausgewählt oder noch nicht bestätigt wurde */
+.selection-dock #pokemonMessage {
+    color: #d8d8d8;
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+/* Lange Namen oder Meldungen dürfen umbrechen, damit das Dock nicht überläuft */
+.selection-dock__pokemon h2,
+.selection-dock__pokemon p {
+    overflow-wrap: break-word;
+}
+
+/* Rechter Bereich im Dock: enthält die Buttons für Bestätigen und Weitergehen */
+.selection-dock__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex: 0 1 440px;
+    justify-content: flex-end;
+}
+
+/* Buttons im Dock haben eine feste Breite, längerer Text darf aber mehrzeilig werden */
+.selection-dock__actions .btn {
+    width: 210px;
+    min-height: 3.4rem;
+    padding: 0.55rem 0.75rem;
+
+    font-size: 0.75rem;
+    line-height: 1.35;
+    text-align: center;
+
+    white-space: normal;
+}
+
+/* Typ-Badge-Liste: zeigt die Pokémon-Typen nebeneinander und bricht bei Platzmangel um */
+.type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.35rem 0;
+}
+
+/* Allgemeines Aussehen eines Pokémon-Typ-Badges */
+.type-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.18rem 0.48rem;
+    border: 2px solid var(--border);
+    border-radius: 999px;
+    color: var(--white);
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+/* Farbzuordnung der einzelnen Pokémon-Typen */
+.type-normal { background: #a8a77a; color: var(--text); }
+.type-fire { background: #ee8130; }
+.type-water { background: #6390f0; }
+.type-electric { background: #f7d02c; color: var(--text); }
+.type-grass { background: #7ac74c; color: var(--text); }
+.type-ice { background: #96d9d6; color: var(--text); }
+.type-fighting { background: #c22e28; }
+.type-poison { background: #a33ea1; }
+.type-ground { background: #e2bf65; color: var(--text); }
+.type-flying { background: #a98ff3; color: var(--text); }
+.type-psychic { background: #f95587; }
+.type-bug { background: #a6b91a; color: var(--text); }
+.type-rock { background: #b6a136; color: var(--text); }
+.type-ghost { background: #735797; }
+.type-dragon { background: #6f35fc; }
+.type-dark { background: #705746; }
+.type-steel { background: #b7b7ce; color: var(--text); }
+.type-fairy { background: #d685ad; color: var(--text); }
+.type-unknown { background: #777777; }
+
+/* Formularseite: Registrierungsbereich im Pokédex-Terminal-Stil */
+.registration-card.registration-machine {
+    width: min(900px, 100%);
+    padding: 0;
+    border: 4px solid var(--border);
+    border-radius: 28px;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+/* Roter Kopfbereich der Registrierungsseite mit Lichtern, Titel und Erklärung */
+.registration-machine__header {
+    padding: 1.3rem 1.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+
+    border-bottom: 4px solid var(--border);
+    background: var(--red);
+    color: var(--white);
+}
+
+/* Kleines Retro-Label im Formular-Header, z. B. als Abschnitts- oder Statusbezeichnung */
+.registration-machine__header .retro-label {
+    margin-bottom: 0.55rem;
+    color: var(--yellow);
+}
+
+/* Hauptüberschrift der Registrierungsseite */
+.registration-machine__header h1 {
+    margin: 0;
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    font-weight: normal;
+    line-height: 1.25;
+}
+
+/* Beschreibungstext unter der Überschrift im Formular-Header */
+.registration-machine__header p:last-child {
+    max-width: 46rem;
+    margin: 0.7rem 0 0;
+    color: var(--white);
+
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+/* Inhaltsbereich der Registrierungsseite: enthält Hinweis, Pokémon-Zusammenfassung und Formular */
+.registration-machine__body {
+    padding: 1.5rem;
+    background: var(--paper);
+}
+
+/* Terminalmeldung innerhalb der Registrierungsmaschine nimmt die volle Breite ein */
+.registration-machine .terminal-alert {
+    width: 100%;
+    margin: 0 0 1.4rem;
+}
+
+/* Abstand unter der Pokémon-Zusammenfassung innerhalb der Registrierungsmaschine */
+.registration-machine .chosen-summary {
+    margin: 0 0 1.4rem;
+}
+
+/* Zusammenfassung des ausgewählten Pokémon oberhalb des Formulars */
+.chosen-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0 1.5rem 1rem;
+    padding: 1rem;
+    border: 3px solid var(--border);
+    border-radius: 20px;
+    background: var(--white);
+}
+
+/* Großes Bild des ausgewählten Pokémon in der Formular-Zusammenfassung */
+.chosen-summary img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* Name des ausgewählten Pokémon auf der Formularseite */
+#trainerSelectedPokemonName {
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+}
+
+/* Überschrift eines Formularabschnitts, z. B. Trainerdaten oder Pokémon-Daten */
+.form-section-title {
+    margin-bottom: 1rem;
+    color: var(--red-dark);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* Formularbereich innerhalb der Registrierungsmaschine */
+.pokedex-form {
+    padding: 1.5rem;
+}
+
+/* Einzelner Formularabschnitt mit eigener weißer Kartenfläche */
+.form-section {
+    margin-bottom: 1.4rem;
+    padding: 1rem;
+    border: 3px solid var(--soft-border);
+    border-radius: 20px;
+    background: var(--white);
+}
+
+/* Einheitlicher Stil für Eingabefelder und Dropdowns im Formular */
+.form-control,
+.form-select {
+    min-height: 2.8rem;
+    border: 3px solid var(--soft-border);
+    border-radius: 14px;
+    background: var(--paper);
+    color: var(--text);
+    font-weight: 700;
+}
+
+/* Fehlerzustand für ungültige Formularfelder */
+.form-field-error {
+    border-color: var(--red) !important;
+    background: var(--danger-soft) !important;
+}
+
+/* Fehlermeldung direkt unter einem ungültigen Formularfeld */
+.field-error-message {
+    margin-top: 0.35rem;
+    color: var(--red);
+    font-size: 0.85rem;
+    font-weight: 850;
+}
+
+/* Berichtseite: Abschlussbericht im Pokédex-Terminal-Stil */
+.report-machine {
+    padding: 0;
+    border: 4px solid var(--border);
+    border-radius: 28px;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+/* Roter Kopfbereich der Berichtseite mit Lichtern, Titel und Erklärung */
+.report-machine__header {
+    padding: 1.3rem 1.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+
+    border-bottom: 4px solid var(--border);
+    background: var(--red);
+    color: var(--white);
+}
+
+/* Kleines Retro-Label im Bericht-Header */
+.report-machine__header .retro-label {
+    margin-bottom: 0.55rem;
+    color: var(--yellow);
+}
+
+/* Hauptüberschrift der Berichtseite */
+.report-machine__header h1 {
+    margin: 0;
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    font-weight: normal;
+    line-height: 1.25;
+}
+
+/* Beschreibungstext unter der Überschrift im Bericht-Header */
+.report-machine__header p:last-child {
+    max-width: 46rem;
+    margin: 0.7rem 0 0;
+    color: var(--white);
+
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+/* Inhaltsbereich der Berichtseite: enthält Terminalmeldung und Berichtsdaten */
+.report-machine__body {
+    padding: 1.5rem;
+    background: var(--paper);
+}
+
+/* Terminalmeldung innerhalb der Berichtmaschine nimmt die volle Breite ein */
+.report-machine .terminal-alert {
+    width: 100%;
+    margin: 0 0 1.4rem;
+}
+
+/* Berichtsdossier: dunkler Pokédex-Bereich mit den wichtigsten Registrierungsdaten */
+.report-data-panel.report-dossier {
+    margin-bottom: 1.4rem;
+    padding: 1.1rem;
+
+    border: 4px solid var(--border);
+    border-radius: 24px;
+
+    background: var(--screen);
+    color: var(--white);
+}
+
+/* Obere Zeile im Dossier: zeigt zusammenfassende Akten- oder Statusinformationen */
+.report-dossier__topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+
+    border-bottom: 3px solid rgba(255, 255, 255, 0.18);
+
+    color: var(--yellow);
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: normal;
+    line-height: 1.4;
+}
+
+/* Zweispaltiger Aufbau des Dossiers: links Pokémon-Karte, rechts Akteninformationen */
+.report-dossier__layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.9fr) 1.35fr;
+    gap: 1.2rem;
+    align-items: stretch;
+}
+
+/* Linke Pokémon-Karte im Berichtsdossier: zeigt Pokémon-Bild, Namen und kurze Merkmale */
+.report-dossier__main-card {
+    position: relative;
+    min-height: 22rem;
+    padding: 1.2rem 1.2rem 1.3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8rem;
+
+    border: 4px solid var(--border);
+    border-radius: 22px;
+
+    background: var(--red);
+    color: var(--white);
+    overflow: hidden;
+}
+
+/* Dekorativer Pokéball-Kreis im Hintergrund der linken Dossier-Karte */
+.report-dossier__main-card::before {
+    content: "";
+    position: absolute;
+    right: -2.5rem;
+    bottom: -2.5rem;
+
+    width: 10rem;
+    height: 10rem;
+
+    border: 1.2rem solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+}
+
+/* Kleines Pokéball-Symbol oben rechts auf der Pokémon-Karte */
+.report-pokeball-mark {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    width: 3.4rem;
+    height: 3.4rem;
+
+    border: 3px solid var(--border);
+    border-radius: 50%;
+
+    background:
+            linear-gradient(
+                    to bottom,
+                    var(--red) 0 44%,
+                    var(--border) 44% 56%,
+                    var(--white) 56% 100%
+            );
+}
+
+/* Mittlerer Knopf des kleinen Pokéball-Symbols */
+.report-pokeball-mark::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 1rem;
+    height: 1rem;
+
+    border: 2px solid var(--border);
+    border-radius: 50%;
+
+    background: var(--white);
+    transform: translate(-50%, -50%);
+}
+
+/* Rahmenbereich für das Pokémon-Bild innerhalb der linken Dossier-Karte */
+.report-dossier__sprite-frame {
+    position: relative;
+    width: 100%;
+    height: 9rem;
+    margin-top: 1.4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* Pokémon-Bild im Dossier: bleibt pixelig und bekommt einen leichten Schatten */
+.report-dossier__sprite-frame img {
+    width: 8.5rem;
+    height: 8.5rem;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.2));
+}
+/* Kleine gelbe Beschriftung über dem Pokémon-Namen */
+.report-dossier__eyebrow {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    margin: 0;
+
+    color: var(--yellow);
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: normal;
+    line-height: 1.4;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+/* Pokémon-Name auf der linken Dossier-Karte */
+.report-dossier__main-card h2 {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    margin: 0;
+
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: left;
+}
+
+/* Info-Chips unter dem Pokémon-Namen, z. B. Statuswerte oder kurze Merkmale */
+.report-dossier__chips {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    margin-top: 0.3rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    justify-content: flex-start;
+}
+
+/* Einzelner Info-Chip auf der Dossier-Karte */
+.report-dossier__chips span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+
+    padding: 0.45rem 0.75rem;
+
+    border: 3px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--paper);
+    color: var(--text);
+
+
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+
+/* Hervorgehobener Text innerhalb der Info-Chips bleibt optisch ruhig */
+.report-dossier__chips strong {
+    font-weight: normal;
+}
+
+/* Rechte Akten-Spalte: enthält die einzelnen Datenboxen des Berichts */
+.report-dossier__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Einzelne Aktenbox innerhalb der rechten Dossier-Spalte */
+.report-detail-group {
+    flex: 1;
+    padding: 0;
+
+    border: 4px solid var(--border);
+    border-radius: 22px;
+
+    background: var(--paper);
+    color: var(--text);
+    overflow: hidden;
+}
+
+/* Überschrift einer Aktenbox, z. B. Trainerdaten oder Prüfvermerk */
+.report-detail-group h3 {
+    margin: 0;
+    padding: 0.85rem 1rem;
+
+    border-bottom: 3px solid var(--border);
+
+    background: var(--yellow);
+    color: var(--text);
+
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: normal;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+/* Einzelne Datenzeile innerhalb einer Aktenbox: links Bezeichnung, rechts Wert */
+.report-detail-row {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+    align-items: center;
+
+    min-height: 3.4rem;
+    padding: 1rem;
+
+    border-top: 2px solid var(--soft-border);
+}
+
+/* Freigabe-Zeile bekommt unten etwas mehr Platz */
+.report-detail-row--approval {
+    padding-bottom: 1.9rem;
+}
+
+/* Linke Beschriftung einer Datenzeile */
+.report-detail-row span {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* Rechter Wert einer Datenzeile: rechtsbündig und auch bei langen Texten umbrechbar */
+.report-detail-row strong {
+    justify-self: end;
+
+    max-width: 100%;
+    padding: 0;
+
+    border: none;
+    border-radius: 0;
+
+    background: transparent;
+    color: var(--text);
+
+    font-size: 1.05rem;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+/* Unterer Berichtbereich: enthält den erzeugten Bericht mit Status, Vorfällen und Fortschritt */
+.report-panel {
+    margin-top: 1.4rem;
+    border: 4px solid var(--border);
+    border-radius: 24px;
+    background: var(--white);
+    overflow: hidden;
+}
+
+/* Kopfzeile des erzeugten Berichts */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--screen);
+    color: var(--white);
+    font-weight: normal;
+}
+
+/* Berichtskarte: ordnet Inhalt in Spalten an */
+.report-card {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    gap: 1.2rem;
+    padding: 1.2rem;
+}
+
+/* Variante der Berichtskarte mit nur einer Spalte */
+.report-card--single {
+    grid-template-columns: 1fr;
+}
+
+/* Inhaltsfläche innerhalb der Berichtskarte */
+.report-card__content {
+    padding: 1.2rem;
+    border: 3px solid var(--soft-border);
+    border-radius: 20px;
+    background: var(--paper);
+}
+
+/* Status-Badge im Bericht, z. B. für Freigabe oder Ablehnung */
+.report-card__status {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    padding: 0.4rem 0.7rem;
+
+    border: 3px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--yellow);
+    color: var(--text);
+    font-weight: normal;
+}
+
+/* Zwischenüberschriften innerhalb des Berichtsinhalts */
+.report-card__content h3 {
+    margin-top: 1rem;
+    color: var(--red-dark);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: normal;
+}
+
+/* Liste der automatisch erzeugten Vorfälle im Bericht */
+#reportIncidentList {
+    margin: 0.8rem 0 1rem;
+    padding-left: 0;
+    list-style: none;
+}
+
+/* Einzelner Vorfall in der Berichtsliste */
+#reportIncidentList li {
+    margin-bottom: 0.55rem;
+    padding: 0.65rem 0.75rem;
+
+    border: 3px solid var(--soft-border);
+    border-radius: 14px;
+
+    background: var(--white);
+    font-weight: normal;
+    font-size: 0.95rem;
+}
+
+/* Warnsymbol vor jedem Vorfall */
+#reportIncidentList li::before {
+    content: "!";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.45rem;
+
+    border: 2px solid var(--border);
+    border-radius: 50%;
+
+    background: var(--yellow);
+    color: var(--text);
+    font-size: 0.85rem;
+}
+
+/* Fortschrittsbox am Ende des Berichts */
+.report-progress-box {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    border: 3px solid var(--border);
+    border-radius: 18px;
+
+    background: var(--screen);
+    color: var(--white);
+}
+
+/* Prozentwert oder wichtiger Fortschrittswert in der Fortschrittsbox */
+.report-progress-box strong {
+    color: var(--yellow);
+    font-size: 1.6rem;
+}
+
+/* Prüfungsseite: Sicherheitscheck als Pokédex-Terminal */
+.check-machine {
+    padding: 0;
+    border: 4px solid var(--border);
+    border-radius: 28px;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+/* Roter Kopfbereich der Prüfungsseite mit Lichtern, Titel und Erklärung */
+.check-machine__header {
+    padding: 1.3rem 1.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+
+    border-bottom: 4px solid var(--border);
+    background: var(--red);
+    color: var(--white);
+}
+
+/* Kleines Retro-Label im Prüfungs-Header */
+.check-machine__header .retro-label {
+    margin-bottom: 0.55rem;
+    color: var(--yellow);
+}
+
+/* Hauptüberschrift der Prüfungsseite */
+.check-machine__header h1 {
+    margin: 0;
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    font-weight: normal;
+    line-height: 1.25;
+}
+
+/* Beschreibungstext unter der Überschrift im Prüfungs-Header */
+.check-machine__header p:last-child {
+    max-width: 46rem;
+    margin: 0.7rem 0 0;
+    color: var(--white);
+
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+/* Inhaltsbereich der Prüfungsseite mit Terminalmeldung, Pokémon-Anzeige und Prüfprotokoll */
+.check-machine__body {
+    padding: 1.5rem;
+    background: var(--paper);
+}
+
+/* Terminalmeldung innerhalb der Prüfungsmaschine nimmt die volle Breite ein */
+.check-machine .terminal-alert {
+    width: 100%;
+    margin: 0 0 1.4rem;
+}
+
+/* Entfernt zusätzlichen Innenabstand, wenn das Prüfungs-Layout in der Maschine liegt */
+.check-machine .check-layout {
+    padding: 0;
+}
+
+/* Zweispaltiges Prüfungs-Layout: links Pokémon-Anzeige, rechts Kontrollelemente und Protokoll */
+.check-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem;
+}
+
+/* Dunkler Prüfungsbildschirm für das aktuell kontrollierte Pokémon */
+.check-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 230px;
+    border: 4px solid var(--border);
+    border-radius: 22px;
+    background: var(--screen);
+    color: var(--white);
+}
+
+/* Pokémon-Bild auf der Prüfungsseite im Pixel-Look */
+.check-screen img {
+    width: 11rem;
+    height: 11rem;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* Einzelner Eintrag im Prüfprotokoll */
+.audit-log li {
+    margin-bottom: 0.5rem;
+    padding: 0.65rem 0.75rem;
+    border: 3px solid var(--soft-border);
+    border-radius: 14px;
+    background: var(--paper);
+    font-weight: 800;
+}
+
+/* Abgeschlossene Prüfschritte werden grün markiert */
+.audit-log li.done {
+    border-color: var(--green);
+}
+
+/* Haken vor abgeschlossenen Prüfschritten */
+.audit-log li.done::before {
+    content: "✓ ";
+    color: var(--green);
+}
+
+
+/* Amtlicher Stempel, der das Ergebnis optisch wie eine Behördenfreigabe wirken lässt */
+.official-stamp {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.65rem 0.9rem;
+    border: 4px solid var(--red);
+    border-radius: 14px;
+    color: var(--red);
+    font-weight: 950;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   Klick-Chaos: fliegende Pokémon nach Benutzerinteraktionen
+   ========================================================= */
+
+/* Unsichtbare Vollbildfläche, in der die Chaos-Pokémon über der Seite erscheinen */
+#pokemonChaosArea {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Wrapper für ein fliegendes Chaos-Pokémon: erhält Position, Richtung und Timing aus JavaScript */
+.pokemon-movement {
+    position: absolute; /* Wichtig, damit top/left/right/bottom greifen! */
+    z-index: 1001;
+    pointer-events: none;
+
+    /* Dynamische Flug-Werte aus dem JS */
+    animation-duration: var(--movement-duration, 6s);
+    animation-delay: var(--movement-delay, 0s);
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+/* Bild des Chaos-Pokémon mit Pixel-Look, Schatten und zusätzlicher Pulsanimation */
+.pokemon-chaos-image {
+    width: var(--chaos-size, 150px);
+    height: var(--chaos-size, 150px);
+    object-fit: contain;
+    image-rendering: pixelated;
+    opacity: 0.95;
+    filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.50));
+
+    /* Das Pulsieren und leichte Wackeln */
+    animation: chaosPulse var(--pulse-duration, 1.5s) ease-in-out infinite alternate;
+}
+
+/* Pulsanimation: Chaos-Pokémon werden leicht größer und kippen minimal hin und her */
+@keyframes chaosPulse {
+    0% {
+        transform: scale(0.85) rotate(-3deg);
+    }
+    100% {
+        transform: scale(1.1) rotate(3deg);
+    }
+}
+
+/* Startposition und Animationsname für die Flugrichtung von links nach rechts */
+.chaos-left-right {
+    left: -200px;
+    top: var(--start-y, 40%);
+    animation-name: chaosLeftRight;
+}
+
+/* Startposition und Animationsname für die Flugrichtung von rechts nach links */
+.chaos-right-left {
+    right: -200px;
+    top: var(--start-y, 40%);
+    animation-name: chaosRightLeft;
+}
+
+/* Startposition und Animationsname für die Flugrichtung von oben nach unten */
+.chaos-top-drop {
+    top: -200px;
+    left: var(--start-x, 50%);
+    animation-name: chaosTopDrop;
+}
+
+
+/* Startposition und Animationsname für die Flugrichtung von unten nach oben */
+.chaos-bottom-rise {
+    bottom: -200px;
+    left: var(--start-x, 50%);
+    animation-name: chaosBottomRise;
+}
+
+/* Startposition und Animationsname für einen bogenförmigen Flug von links */
+.chaos-arc-left {
+    left: -200px;
+    top: var(--start-y, 50%);
+    animation-name: chaosArcLeft;
+}
+
+/* Startposition und Animationsname für einen bogenförmigen Flug von rechts */
+.chaos-arc-right {
+    right: -200px;
+    top: var(--start-y, 50%);
+    animation-name: chaosArcRight;
+}
+
+/* Fluganimationen für die Chaos-Pokémon: bewegen Elemente aus dem sichtbaren Bildschirmbereich heraus */
+
+/* Bewegung von links nach rechts über den Bildschirm */
+@keyframes chaosLeftRight {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(calc(100vw + 400px), var(--chaos-y-offset, 0px)) rotate(var(--chaos-rotate, 360deg));
+    }
+}
+
+
+/* Bewegung von rechts nach links über den Bildschirm */
+@keyframes chaosRightLeft {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(calc(-100vw - 400px), var(--chaos-y-offset, 0px)) rotate(var(--chaos-rotate, -360deg));
+    }
+}
+
+/* Bewegung von oben nach unten aus dem Bildschirm heraus */
+@keyframes chaosTopDrop {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(var(--chaos-x-offset, 0px), calc(100vh + 400px)) rotate(var(--chaos-rotate, 270deg));
+    }
+}
+
+/* Bewegung von unten nach oben aus dem Bildschirm heraus */
+@keyframes chaosBottomRise {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(var(--chaos-x-offset, 0px), calc(-100vh - 400px)) rotate(var(--chaos-rotate, -270deg));
+    }
+}
+
+/* Bogenflug von links: das Pokémon fliegt zuerst zur Bildschirmmitte und danach nach rechts hinaus */
+@keyframes chaosArcLeft {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        /* Fliegt in der Mitte des Bildschirms einen Bogen nach oben oder unten */
+        transform: translate(50vw, calc(var(--chaos-y-offset, -150px) * 2)) rotate(calc(var(--chaos-rotate, 180deg) / 2));
+    }
+    100% {
+        transform: translate(calc(100vw + 400px), 0) rotate(var(--chaos-rotate, 360deg));
+    }
+}
+
+/* Bogenflug von rechts: das Pokémon fliegt zuerst zur Bildschirmmitte und danach nach links hinaus */
+@keyframes chaosArcRight {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        /* Fliegt in der Mitte des Bildschirms einen Bogen nach oben oder unten */
+        transform: translate(-50vw, calc(var(--chaos-y-offset, -150px) * 2)) rotate(calc(var(--chaos-rotate, -180deg) / 2));
+    }
+    100% {
+        transform: translate(calc(-100vw - 400px), 0) rotate(var(--chaos-rotate, -360deg));
+    }
+}
+
+/* Mobile Ansicht: Berichtsdossier wird einspaltig und besser lesbar dargestellt */
+@media (max-width: 760px) {
+    .report-dossier__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .report-dossier__topline {
+        flex-direction: column;
+    }
+
+    .report-detail-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    .report-detail-row strong {
+        justify-self: start;
+        text-align: left;
+    }
+
+    .report-dossier__main-card {
+        min-height: 24rem;
+    }
+}
+

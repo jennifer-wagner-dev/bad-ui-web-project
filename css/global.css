@@ -1,0 +1,271 @@
+/* =========================================================
+   PokéMeldeamt – Globale Sytles und Variablen
+   ========================================================= */
+
+/* Fonts laden: Pokémon-Schrift für Retro-Elemente und Arial Rounded für bessere Lesbarkeit */
+@font-face {
+    font-family: "PKMN RBYGSC";
+    src: url("../fonts/PKMN.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "ArialRoundedCustom";
+    src: url("../fonts/ArialRoundedMtExtraBold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Globale CSS-Variablen: Farben, Textwerte, Rahmenfarben und Animationsdauer zentral festlegen */
+:root {
+    --red: #cf2f2f;
+    --red-dark: #8f2020;
+    --blue: #2a75bb;
+    --yellow: #ffcb05;
+    --cream: #f5ead6;
+    --paper: #fff8e8;
+    --white: #fff;
+    --screen: #263238;
+    --text: #252525;
+    --muted: #6d6d6d;
+    --border: #252525;
+    --soft-border: #dbcdb6;
+    --green: #198754;
+    --danger-soft: #fff0ec;
+    --movement-duration: 8s;
+
+    /* Standardwerte für animierte Hintergrund- und Chaos-Pokémon */
+    --ambient-opacity: 0.18;
+    --ambient-x: 0px;
+    --ambient-y: 0px;
+    --ambient-duration: 14s;
+    --ambient-size: 5rem;
+
+    /* Default-Werte für Klick-Chaos-Pokémon */
+    --movement-delay: 0s;
+    --pulse-duration: 1.5s;
+
+    --chaos-size: 90px;
+    --chaos-rotate: 360deg;
+    --chaos-x-offset: 0px;
+    --chaos-y-offset: 0px;
+
+    --start-x: 50%;
+    --start-y: 50%;
+}
+
+/* Größenberechnung vereinheitlichen: Padding und Border zählen zur Elementbreite dazu */
+* {
+    box-sizing: border-box;
+}
+
+/* Grundlayout der Seite: Hintergrund, Standardschrift und horizontales Scrollen verhindern */
+body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--text);
+    background: var(--cream);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.55;
+    overflow-x: hidden;
+}
+
+/* Hilfsklasse zum Ausblenden von Elementen */
+.hidden {
+    display: none !important;
+}
+
+/* Links übernehmen die normale Textfarbe und bekommen keine Unterstreichung */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Hintergrundfläche für dekorative fliegende Pokémon */
+.ambient-pokemon-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Einzelnes Hintergrund-Pokémon mit Pixel-Look und CSS-Animation */
+.ambient-pokemon {
+    position: absolute;
+    width: var(--ambient-size, 92px);
+    height: var(--ambient-size, 92px);
+    object-fit: contain;
+    image-rendering: pixelated;
+    opacity: var(--ambient-opacity, 0.14);
+    filter: brightness(0.95);
+    pointer-events: none;
+    animation-duration: var(--ambient-duration, 34s);
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+/* Animations-Klassen & Keyframes (LeftRight, RightLeft, etc.) */
+.ambient-left-right { left: -150px; animation-name: ambientLeftRight; }
+.ambient-right-left { right: -150px; animation-name: ambientRightLeft; }
+.ambient-top-drop { top: -150px; animation-name: ambientTopDrop; }
+.ambient-bottom-rise { bottom: -150px; animation-name: ambientBottomRise; }
+.ambient-diagonal-left { left: -150px; top: -150px; animation-name: ambientDiagonalLeft; }
+.ambient-diagonal-right { right: -150px; top: -150px; animation-name: ambientDiagonalRight; }
+.ambient-arc-left { left: -170px; animation-name: ambientArcLeft; }
+.ambient-arc-right { right: -170px; animation-name: ambientArcRight; }
+
+/* Keyframes definieren die eigentliche Bewegung über den Bildschirm */
+@keyframes ambientLeftRight {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(calc(100vw + 260px), var(--ambient-y, 60px)) rotate(180deg); }
+}
+@keyframes ambientRightLeft {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(calc(-100vw - 260px), var(--ambient-y, -60px)) rotate(-180deg); }
+}
+@keyframes ambientTopDrop {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(var(--ambient-x, 100px), calc(100vh + 260px)) rotate(160deg); }
+}
+@keyframes ambientBottomRise {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(var(--ambient-x, -100px), calc(-100vh - 260px)) rotate(-160deg); }
+}
+@keyframes ambientDiagonalLeft {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(calc(100vw + 260px), calc(100vh + 260px)) rotate(220deg); }
+}
+@keyframes ambientDiagonalRight {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(calc(-100vw - 260px), calc(100vh + 260px)) rotate(-220deg); }
+}
+@keyframes ambientArcLeft {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    35% { transform: translate(35vw, -80px) rotate(45deg); }
+    70% { transform: translate(70vw, 90px) rotate(120deg); }
+    100% { transform: translate(calc(100vw + 260px), 0) rotate(180deg); }
+}
+@keyframes ambientArcRight {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    35% { transform: translate(-35vw, 80px) rotate(-45deg); }
+    70% { transform: translate(-70vw, -90px) rotate(-120deg); }
+    100% { transform: translate(calc(-100vw - 260px), 0) rotate(-180deg); }
+}
+
+/* Ruhigere Hintergrundvariante mit niedrigerer Deckkraft */
+.ambient-pokemon-background--calm .ambient-pokemon {
+    opacity: var(--ambient-opacity, 0.10);
+}
+
+/* Overlays für Sperrbildschirm, Ladezustand und Meme-Meldungen */
+.access-denied-overlay,
+.page-loading-overlay,
+.meme-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(37, 37, 37, 0.78);
+}
+
+/* Zentrale Box innerhalb des Overlays */
+.access-denied-box,
+.page-loading-box,
+.meme-box {
+    width: min(520px, 100%);
+    padding: 1.5rem;
+    border: 4px solid var(--border);
+    border-radius: 22px;
+    background: var(--paper);
+}
+
+/* Einheitliche Überschriften für Overlay-Meldungen */
+.access-denied-label,
+.page-loading-title,
+.meme-label {
+    margin-bottom: 0.5rem;
+    color: var(--red);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Ladebalken mit bewegtem roten Innenbalken */
+.page-loading-bar {
+    height: 0.7rem;
+    border: 2px solid var(--border);
+    border-radius: 999px;
+    background: var(--white);
+    overflow: hidden;
+}
+
+.page-loading-bar-inner {
+    width: 40%;
+    height: 100%;
+    background: var(--red);
+    animation: flatLoading 1s linear infinite;
+}
+
+/* Animation lässt den Ladebalken wiederholt durchlaufen */
+@keyframes flatLoading {
+    from { transform: translateX(-120%); }
+    to { transform: translateX(260%); }
+}
+
+/* Layout für Meme-Overlays mit zentriertem Inhalt */
+.meme-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Zentriert Label, Bild und Text horizontal */
+    text-align: center;
+}
+
+/* Responsives Meme-Bild im Pixel-Look */
+.meme-image {
+    width: min(250px, 70vw);
+    height: min(250px, 70vw);
+    object-fit: contain;
+    image-rendering: pixelated;
+    margin: 1rem 0 0.5rem 0;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+
+/* Text unter dem Meme-Bild mit Zeilenumbrüchen aus JavaScript */
+.meme-text {
+    margin: 0.5rem 0 0 0;
+    font-family: "PKMN RBYGSC", Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    white-space: pre-line;
+}
+
+/* Wechselnder Pokéball-Cursor */
+
+html.cursor-pokeball-1,
+html.cursor-pokeball-1 * {
+    cursor: url("../img/PokeballNormalCursor.png") 24 24, auto !important;
+}
+
+html.cursor-pokeball-2,
+html.cursor-pokeball-2 * {
+    cursor: url("../img/PokeballGreatBallCursor.png") 24 24, auto !important;
+}
+
+html.cursor-pokeball-3,
+html.cursor-pokeball-3 * {
+    cursor: url("../img/PokeballMasterBallCursor.png") 24 24, auto !important;
+}
+
+html.cursor-pokeball-4,
+html.cursor-pokeball-4 * {
+    cursor: url("../img/PokeballUltraballCursor.png") 24 24, auto !important;
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéMeldeamt | Pokémon auswählen</title>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pokedex.css">
+
+</head>
+<body class="page page-pokemon">
+
+<main class="pokemon-select-shell">
+    <section class="pokemon-select-board pokedex-machine">
+
+        <header class="minimal-page-header pokedex-machine__header">
+            <div class="pokedex-machine__lights" aria-hidden="true">
+                <span class="pokedex-light pokedex-light--blue"></span>
+                <span class="pokedex-light pokedex-light--red"></span>
+                <span class="pokedex-light pokedex-light--yellow"></span>
+            </div>
+
+            <div>
+                <p class="retro-label">Kanto Pokédex · Gen 1</p>
+                <h1>Wähle dein Pokémon</h1>
+                <p>Die Einträge sind erst verborgen. Klicke eine Karte an, um das Pokémon aufzudecken.</p>
+            </div>
+        </header>
+
+        <div class="pokedex-machine__body">
+            <!-- Systemmeldung der Auswahlseite; kann per JavaScript über die id verändert werden -->
+            <p class="terminal-alert terminal-alert--wide" id="systemMessage">
+                SYSTEM:<br>
+                Wähle eine Karte aus. Einträge bleiben bis zum Scan verborgen.
+            </p>
+
+            <div class="pokedex-toolbar">
+                <!-- Unsichtbares Label für Barrierefreiheit, damit Screenreader das Suchfeld korrekt beschreiben -->
+                <label for="pokemonSearchInput" class="visually-hidden">Pokémon suchen</label>
+
+                <!-- Suchfeld zum Filtern der Pokémon-Karten; wird in pagePokemon.js über die id angesprochen -->
+                <input
+                        type="search"
+                        class="form-control pokedex-search"
+                        id="pokemonSearchInput"
+                        placeholder="Pokémon suchen, z. B. Pikachu">
+            </div>
+
+            <!-- Container für die Pokémon-Karten; die Karten werden per JavaScript dynamisch eingefügt -->
+            <div class="pokedex-grid" id="pokemonGrid">
+                <p class="pokedex-loading">Pokédex lädt...</p>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- Schwebendes Auswahl-Dock unten auf der Seite: zeigt das aktuell ausgewählte Pokémon -->
+<aside class="selection-dock" id="selectedPokemonPanel">
+    <div class="selection-dock__pokemon">
+        <!-- Bild, Nummer, Name, Typen und Meldung werden nach der Auswahl per JavaScript aktualisiert -->
+        <img id="selectedPokemonImage" src="" alt="Noch kein Pokémon ausgewählt">
+        <div>
+            <p id="selectedPokemonNumber">#---</p>
+            <h2 id="selectedPokemonName">Kein Pokémon ausgewählt</h2>
+            <div class="type-list" id="selectedPokemonTypes"></div>
+            <p id="pokemonMessage">Klicke eine Karte an, um sie aufzudecken.</p>
+        </div>
+    </div>
+
+    <div class="selection-dock__actions">
+        <!-- Button ist anfangs deaktiviert und wird erst nach einer Pokémon-Auswahl freigeschaltet -->
+        <button class="btn btn-pokedex" id="confirmPokemonButton" disabled>
+            Auswahl bestätigen
+        </button>
+
+        <!-- Weiter-Link ist anfangs deaktiviert und wird erst nach Bestätigung der Auswahl aktiviert -->
+        <a class="btn btn-pokedex-outline disabled" href="trainer.html" id="pokemonNextLink">
+            Weiter
+        </a>
+    </div>
+</aside>
+
+<!-- Vollbildbereich für Chaos-Pokémon, die per JavaScript bei Interaktionen erzeugt werden -->
+<div id="pokemonChaosArea"></div>
+
+<!-- JavaScript-Dateien: Reihenfolge ist wichtig, weil spätere Dateien Funktionen aus vorherigen Dateien verwenden -->
+<script src="../bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../js/helpers.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/backgroundPokemon.js"></script>
+<script src="../js/chaosEffects.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/pagePokemon.js"></script>
+<script src="../js/cursorEffects.js"></script>
+</body>
+</html>

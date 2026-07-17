@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéMeldeamt | Start</title>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pokedex.css">
+</head>
+<body class="page page-index">
+
+<!-- Hintergrund-Ebene für die animierten Pokémon auf der Startseite -->
+<div class="ambient-pokemon-background" id="ambientPokemonBackground"></div>
+
+<main class="landing-shell">
+    <section class="landing-machine">
+
+        <header class="landing-machine__header">
+            <!-- Dekorative Pokédex-Lichter; aria-hidden blendet sie für Screenreader aus -->
+            <div class="pokedex-machine__lights" aria-hidden="true">
+                <span class="pokedex-light pokedex-light--blue"></span>
+                <span class="pokedex-light pokedex-light--red"></span>
+                <span class="pokedex-light pokedex-light--yellow"></span>
+            </div>
+
+            <div>
+                <p class="retro-label">Kanto Registration Terminal</p>
+                <h1>PokéMeldeamt</h1>
+                <p class="landing-text">
+                    Öffne den Pokédex, wähle ein Pokémon aus der Gen-1-Datenbank
+                    und starte die Registrierung.
+                </p>
+            </div>
+        </header>
+
+        <div class="landing-machine__body">
+            <!-- Systemmeldung auf der Startseite; kann über die id später per JavaScript angesprochen werden -->
+            <p class="terminal-alert terminal-alert--landing" id="systemMessage">
+                SYSTEM:<br>
+                Terminal bereit. Registrierung kann gestartet werden.
+            </p>
+
+            <div class="landing-machine__content">
+                <div class="landing-machine__screen">
+                    <p class="landing-machine__screen-label">STARTMODUL</p>
+                    <h2>Neue Registrierung</h2>
+                    <p>
+                        Starte den amtlich unnötig komplizierten Registrierungsprozess
+                        für dein Pokémon.
+                    </p>
+
+                    <!-- Link zur nächsten Seite: startet den Ablauf mit der Pokémon-Auswahl -->
+                    <a href="pokemon.html" class="btn btn-pokedex landing-button">
+                        Pokémon registrieren
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- Vollbildbereich für Chaos-Pokémon, die per JavaScript bei Interaktionen erzeugt werden -->
+<div id="pokemonChaosArea"></div>
+
+<!-- JavaScript-Dateien: Reihenfolge ist wichtig, weil spätere Dateien Funktionen aus vorherigen Dateien verwenden -->
+<script src="../bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../js/helpers.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/backgroundPokemon.js"></script>
+<script src="../js/chaosEffects.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/cursorEffects.js"></script>
+</body>
+</html>

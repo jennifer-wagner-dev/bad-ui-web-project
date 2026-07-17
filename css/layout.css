@@ -1,0 +1,314 @@
+/* =========================================================
+   PokéMeldeamt – Layout und Seitencontainer
+   ========================================================= */
+
+/* Oberer Seitenbereich mit begrenzter Breite und zentriertem Text */
+.minimal-page-header {
+    max-width: 1100px;
+    margin: 0 auto 1.4rem;
+    text-align: center;
+}
+
+/* Seitencontainer liegen über dem animierten Hintergrund */
+.pokemon-select-shell,
+.center-shell {
+    position: relative;
+    z-index: 1;
+}
+
+/* Sorgt dafür, dass die Registrierungskarte horizontal und vertikal mittig steht */
+.center-shell {
+    min-height: 100vh;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Startseite als Pokédex-Terminal */
+
+/* Startseite: Der gesamte Inhalt wird mittig über dem animierten Pokémon-Hintergrund platziert */
+.landing-shell {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+/* Äußerer Pokédex-Rahmen der Startseite: enthält Header, Systemmeldung und Startbereich */
+.landing-machine {
+    width: min(980px, 100%);
+    border: 4px solid var(--border);
+    border-radius: 30px;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+/* Oberer roter Bereich des Pokédex: links die Lichter, rechts Titel und Beschreibung */
+.landing-machine__header {
+    padding: 1.5rem 1.6rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+
+    border-bottom: 4px solid var(--border);
+    background: var(--red);
+    color: var(--white);
+}
+
+/* Kleine Beschriftungen wie Status- oder Abschnittsnamen im Retro-Stil */
+.retro-label {
+    margin: 0 0 0.8rem;
+    color: var(--blue);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Im roten Header wird das Retro-Label gelb dargestellt, damit es sichtbar und pokédexartig wirkt */
+.landing-machine__header .retro-label {
+    margin-bottom: 0.55rem;
+    color: var(--yellow);
+}
+
+/* Hauptüberschrift der Startseite: großer Pokémon-Schriftzug im roten Header */
+.landing-machine__header h1 {
+    margin: 0;
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: normal;
+    line-height: 1.15;
+}
+/* Kurzer Erklärungstext unter der Hauptüberschrift im Header */
+.landing-text {
+    max-width: 40rem;
+    margin: 0.8rem 0 0;
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+
+/* Unterer Inhaltsbereich der Startseite: hier sitzen Terminalmeldung und Startbildschirm */
+.landing-machine__body {
+    padding: 1.5rem;
+    background: var(--paper);
+}
+
+/* Systemmeldung auf der Startseite bekommt Abstand zum Startbildschirm */
+.landing-machine .terminal-alert {
+    width: 100%;
+    margin: 0 0 1.4rem;
+}
+
+/* Zentriert den inneren dunklen Bildschirm im Pokédex-Gehäuse */
+.landing-machine__content {
+    display: flex;
+    justify-content: center;
+}
+
+/* Dunkler Bildschirmbereich: hier steht die eigentliche Startaktion */
+.landing-machine__screen {
+    width: min(620px, 100%);
+    padding: 2rem 1.6rem;
+
+    border: 4px solid var(--border);
+    border-radius: 24px;
+
+    background: var(--screen);
+    color: var(--white);
+    text-align: center;
+}
+
+/* Kleine gelbe Beschriftung im dunklen Bildschirmbereich */
+.landing-machine__screen-label {
+    margin: 0 0 0.7rem;
+    color: var(--yellow);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+/* Überschrift im Startbildschirm direkt über dem Starttext */
+.landing-machine__screen h2 {
+    margin: 0 0 0.8rem;
+    color: var(--white);
+    font-family: "PKMN RBYGSC", "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1.4rem;
+    font-weight: normal;
+    line-height: 1.3;
+}
+
+/* Erklärungstext im dunklen Bildschirm: bewusst lesbarer als die Pokémon-Schrift */
+.landing-machine__screen p {
+    max-width: 32rem;
+    margin: 0 auto 1.5rem;
+    color: var(--paper);
+    font-family: "ArialRoundedCustom", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+/* Startbutton bleibt breit, passt sich aber auf kleinen Bildschirmen an */
+.landing-button {
+    min-width: min(340px, 100%);
+}
+
+/* Allgemeine breite Karte für Layoutbereiche, die nicht zu schmal werden sollen */
+.wide-card {
+    width: min(980px, 100%);
+}
+
+/* BUTTONS */
+
+/* Allgemeines Button-Grunddesign: rundet Bootstrap-Buttons ab und gibt ihnen den Retro-Schriftstil */
+.btn {
+    border-radius: 14px;
+    font-family: "PKMN RBYGSC", Arial, sans-serif;
+    font-weight: normal;
+}
+
+/* Pokédex-Buttons: werden für Hauptaktionen und Weiter-Links im Projekt verwendet */
+.btn-pokedex,
+.btn-pokedex-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.72rem 1.2rem;
+    border: 3px solid var(--border);
+    text-decoration: none;
+}
+
+/* Gefüllter Aktionsbutton, z. B. für Starten, Auswählen oder Bestätigen */
+.btn-pokedex {
+    background: var(--yellow);
+    color: var(--text);
+}
+
+/* Hover-Zustand des gefüllten Buttons: hellt den Button beim Darüberfahren auf */
+.btn-pokedex:hover {
+    background: var(--white);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+/* Umrandeter Button für sekundäre Aktionen */
+.btn-pokedex-outline {
+    background: var(--white);
+    color: var(--text);
+}
+
+/* Hover-Zustand des Outline-Buttons: hebt ihn gelb hervor */
+.btn-pokedex-outline:hover {
+    background: var(--yellow);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+/* Deaktivierte Buttons und Links werden sichtbar ausgegraut und sind nicht anklickbar */
+.btn.disabled,
+.btn:disabled,
+a.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Terminalmeldung: zeigt Systemhinweise im dunklen Pokédex-Display-Stil */
+.terminal-alert {
+    width: min(780px, 100%);
+    margin: 0 auto 1.2rem;
+    padding: 0.9rem 1rem;
+
+    border: 3px solid var(--border);
+    border-left-width: 10px;
+    border-left-color: var(--yellow);
+    border-radius: 18px;
+
+    background: var(--screen);
+    color: var(--white);
+
+    font-family: "PKMN RBYGSC", Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: normal;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    text-align: left;
+    white-space: pre-line;
+}
+
+/* Terminalmeldung innerhalb der Registrierungskarte bekommt eigene Breite und Abstände */
+.registration-card .terminal-alert {
+    width: calc(100% - 3rem);
+    margin: 1rem auto 1.4rem;
+}
+
+/* Kleiner Pfeil vor jeder Terminalmeldung, damit sie wie eine Systemausgabe wirkt */
+.terminal-alert::before {
+    content: "▶ ";
+    color: var(--yellow);
+    font-weight: 950;
+}
+
+/* Fester Neustart-Button oben rechts: setzt die Anwendung jederzeit zurück */
+.restart-application-button {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 6000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 2.8rem;
+    padding: 0.55rem 0.9rem;
+    border: 3px solid var(--border);
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--text);
+    font-family: "PKMN RBYGSC", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 950;
+    cursor: pointer;
+}
+
+/* Pokéball-Symbol vor dem Neustart-Button */
+.restart-application-button::before {
+    content: "";
+    width: 0.85rem;
+    height: 0.85rem;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    background: linear-gradient(to bottom, var(--red) 0 45%, var(--border) 46% 54%, white 55% 100%);
+}
+
+/* Hover-Zustand des Neustart-Buttons */
+.restart-application-button:hover {
+    background: var(--white);
+    color: var(--text);
+}
+
+/* Auf kleineren Bildschirmen wird der feste Neustart-Button kompakter */
+@media (max-width: 760px) {
+    .restart-application-button {
+        top: 0.75rem;
+        right: 0.75rem;
+        min-height: 2.5rem;
+        padding: 0.45rem 0.7rem;
+        font-size: 0.8rem;
+    }
+}

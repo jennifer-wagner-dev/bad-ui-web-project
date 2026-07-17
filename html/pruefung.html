@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéMeldeamt | Prüfung</title>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pokedex.css">
+
+</head>
+<body class="page page-pruefung">
+
+<!-- Ruhige Hintergrund-Ebene für animierte Pokémon während der Prüfungsseite -->
+<div class="ambient-pokemon-background ambient-pokemon-background--calm" id="ambientPokemonBackground"></div>
+
+<main class="center-shell">
+    <section class="registration-card wide-card check-machine">
+
+        <header class="check-machine__header">
+            <!-- Dekorative Pokédex-Lichter; aria-hidden blendet sie für Screenreader aus -->
+            <div class="pokedex-machine__lights" aria-hidden="true">
+                <span class="pokedex-light pokedex-light--blue"></span>
+                <span class="pokedex-light pokedex-light--red"></span>
+                <span class="pokedex-light pokedex-light--yellow"></span>
+            </div>
+
+            <div>
+                <p class="retro-label">Security Check</p>
+                <h1>Prüfung starten</h1>
+                <p>Deine Angaben werden nun vom PokéMeldeamt überprüft. Der Vorgang kann unnötig lange dauern.</p>
+            </div>
+        </header>
+
+        <div class="check-machine__body">
+
+            <!-- Systemmeldung der Prüfungsseite; wird über die id per JavaScript aktualisiert -->
+            <p class="terminal-alert" id="systemMessage">
+                SYSTEM:<br>
+                Prüfung bereit. Starte die Sicherheitskontrolle, um den Bericht freizuschalten.
+            </p>
+
+            <div class="check-layout">
+                <!-- Linker Prüfungsbildschirm: zeigt das Pokémon, das während der Prüfung verwendet wird -->
+                <div class="check-screen">
+                    <img id="securityPokemonImage" src="" alt="Pokémon der Sicherheitsprüfung">
+                    <p id="securityPokemonId">#---</p>
+                    <h2 id="securityPokemonName">Noch nicht geprüft</h2>
+                    <p id="securityPokemonStatus">Status: wartend</p>
+                </div>
+
+                <!-- Rechter Bereich mit Startbutton, Prüfprotokoll, Bestätigung und Weiterleitung -->
+                <div class="check-controls">
+                    <p>Starte den Pokédex-Abgleich für das ausgewählte Pokémon.</p>
+
+                    <!-- Startet die Sicherheitsprüfung per JavaScript -->
+                    <button class="btn btn-pokedex" id="startSecurityCheckButton">
+                        Prüfung starten
+                    </button>
+
+                    <!-- Prüfprotokoll ist anfangs ausgeblendet und wird während der Prüfung eingeblendet -->
+                    <div class="audit-box hidden" id="securityProtocolBox">
+                        <h3>Prüfprotokoll</h3>
+                        <ul class="audit-log" id="securityProtocolList"></ul>
+                    </div>
+
+                    <!-- Ergebnisbereich ist anfangs ausgeblendet und erscheint erst nach abgeschlossener Prüfung -->
+                    <div class="security-result hidden" id="securityResultBox">
+                        <label class="checkbox-line">
+                            <!-- Checkbox muss aktiviert werden, bevor die Prüfung abgeschlossen werden kann -->
+                            <input type="checkbox" id="securityConfirmCheck">
+                            Ich bestätige, dass ich die Prüfung nicht vollständig verstanden habe.
+                        </label>
+
+                        <!-- Button ist anfangs deaktiviert und wird erst nach Bestätigung freigeschaltet -->
+                        <button class="btn btn-pokedex mt-3" id="finishSecurityCheckButton" disabled>
+                            Prüfung abschließen
+                        </button>
+
+                        <!-- Meldungsbereich für Rückmeldungen während der Sicherheitsprüfung -->
+                        <p class="form-message" id="securityMessage"></p>
+
+                        <!-- Weiter-Link ist anfangs deaktiviert und wird erst nach erfolgreichem Abschluss aktiviert -->
+                        <a href="bericht.html" class="btn btn-pokedex-outline disabled" id="securityNextLink">
+                            Weiter zum Bericht
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Vollbildbereich für Chaos-Pokémon, die per JavaScript bei Interaktionen erzeugt werden -->
+<div id="pokemonChaosArea"></div>
+
+<!-- JavaScript-Dateien: Reihenfolge ist wichtig, weil spätere Dateien Funktionen aus vorherigen Dateien verwenden -->
+<script src="../bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../js/helpers.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/backgroundPokemon.js"></script>
+<script src="../js/chaosEffects.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/pageTest.js"></script>
+<script src="../js/cursorEffects.js"></script>
+</body>
+</html>

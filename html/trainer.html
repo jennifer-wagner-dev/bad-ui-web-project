@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéMeldeamt | Registrierung</title>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pokedex.css">
+
+</head>
+<body class="page page-trainer">
+
+<!-- Ruhige Hintergrund-Ebene für animierte Pokémon auf der Formularseite -->
+<div class="ambient-pokemon-background ambient-pokemon-background--calm" id="ambientPokemonBackground"></div>
+
+<main class="center-shell">
+    <section class="registration-card registration-machine">
+
+        <header class="registration-machine__header">
+            <!-- Dekorative Pokédex-Lichter; aria-hidden blendet sie für Screenreader aus -->
+            <div class="pokedex-machine__lights" aria-hidden="true">
+                <span class="pokedex-light pokedex-light--blue"></span>
+                <span class="pokedex-light pokedex-light--red"></span>
+                <span class="pokedex-light pokedex-light--yellow"></span>
+            </div>
+
+            <div>
+                <p class="retro-label">Registration Form</p>
+                <h1>Pokémon registrieren</h1>
+                <p>Ergänze die Trainerdaten und reiche dein Pokémon offiziell beim PokéMeldeamt ein.</p>
+            </div>
+        </header>
+
+        <div class="registration-machine__body">
+
+            <!-- Systemmeldung der Formularseite; wird über die id per JavaScript aktualisiert -->
+            <p class="terminal-alert" id="systemMessage">
+                SYSTEM:<br>
+                Pokémon geladen. Ergänze jetzt die Registrierungsdaten.
+            </p>
+
+            <!-- Zusammenfassung des zuvor ausgewählten Pokémon; Daten werden per JavaScript eingesetzt -->
+            <div class="chosen-summary" id="trainerPokemonSummary">
+                <img id="trainerSelectedPokemonImage" src="" alt="Ausgewähltes Pokémon">
+                <div>
+                    <p id="trainerSelectedPokemonNumber">#---</p>
+                    <h2 id="trainerSelectedPokemonName">wird geladen...</h2>
+                    <div class="type-list" id="trainerSelectedPokemonTypes"></div>
+                </div>
+            </div>
+
+            <!-- Formular speichert Trainer- und Pokémon-Daten; novalidate deaktiviert die Browser-Validierung zugunsten eigener JavaScript-Prüfung -->
+            <form class="pokedex-form" id="trainerForm" novalidate>
+                <div class="form-section">
+                    <h2 class="form-section-title">Trainerdaten</h2>
+
+                    <div class="mb-3">
+                        <label for="trainerName" class="form-label">Trainername <span
+                                class="required-badge">Pflicht</span></label>
+                        <input type="text" class="form-control" id="trainerName" placeholder="z. B. Ash">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="trainerId" class="form-label">Trainer-ID <span class="required-badge">Pflicht</span></label>
+                        <input type="text" class="form-control" id="trainerId" placeholder="z. B. KNT-025">
+                        <p class="form-help-text">Mindestens 5 Zeichen.</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="trainerRegion" class="form-label">Region <span class="required-badge">Pflicht</span></label>
+                        <select class="form-select" id="trainerRegion">
+                            <option value="">Bitte wählen</option>
+                            <option value="kanto">Kanto</option>
+                            <option value="johto">Johto</option>
+                            <option value="hoenn">Hoenn</option>
+                            <option value="sinnoh">Sinnoh</option>
+                            <option value="alola">Alola</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contactCode" class="form-label">Kontaktcode <span
+                                class="required-badge">Pflicht</span></label>
+                        <input type="text" class="form-control" id="contactCode" placeholder="z. B. PIKA-123">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="form-section-title">Pokémon-Daten</h2>
+
+                    <div class="mb-3">
+                        <label for="pokemonLevel" class="form-label">Level <span
+                                class="required-badge">Pflicht</span></label>
+                        <input type="number" class="form-control" id="pokemonLevel" min="1" max="100"
+                               placeholder="z. B. 25">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pokemonAddress" class="form-label">Aktueller Aufenthaltsort <span
+                                class="required-badge">Pflicht</span></label>
+                        <input type="text" class="form-control" id="pokemonAddress" placeholder="z. B. Route 2">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pokemonRisk" class="form-label">Gefährdungsstufe <span class="required-badge">Pflicht</span></label>
+                        <select class="form-select" id="pokemonRisk">
+                            <option value="">Bitte wählen</option>
+                            <option value="low">niedrig</option>
+                            <option value="medium">mittel</option>
+                            <option value="high">hoch</option>
+                            <option value="unknown">unklar</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="formEaten" class="form-label">Hat das Pokémon bereits Formulare gefressen? <span
+                                class="required-badge">Pflicht</span></label>
+                        <select class="form-select" id="formEaten">
+                            <option value="">Bitte wählen</option>
+                            <option value="no">nein</option>
+                            <option value="yes">ja</option>
+                            <option value="maybe">vielleicht</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Speichert die Formularwerte per JavaScript und prüft dabei, ob alle Pflichtfelder ausgefüllt sind -->
+                <button class="btn btn-pokedex w-100" type="submit">Registrierung speichern</button>
+                <!-- Meldungsbereich für Fehler oder Erfolg beim Speichern des Formulars -->
+                <p class="form-message" id="trainerFormMessage"></p>
+
+                <!-- Weiter-Link ist anfangs deaktiviert und wird erst nach erfolgreicher Speicherung aktiviert -->
+                <a href="pruefung.html" class="btn btn-pokedex-outline disabled w-100" id="trainerNextLink">
+                    Weiter zur Prüfung
+                </a>
+            </form>
+        </div>
+    </section>
+</main>
+
+<!-- Vollbildbereich für Chaos-Pokémon, die per JavaScript bei Interaktionen erzeugt werden -->
+<div id="pokemonChaosArea"></div>
+
+<!-- JavaScript-Dateien: Reihenfolge ist wichtig, weil spätere Dateien Funktionen aus vorherigen Dateien verwenden -->
+<script src="../bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../js/helpers.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/backgroundPokemon.js"></script>
+<script src="../js/chaosEffects.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/pageTrainer.js"></script>
+<script src="../js/cursorEffects.js"></script>
+</body>
+</html>

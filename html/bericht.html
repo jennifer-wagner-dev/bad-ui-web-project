@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéMeldeamt | Bericht</title>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pokedex.css">
+
+</head>
+<body class="page page-bericht">
+
+<!-- Hintergrund-Ebene für die animierten Pokémon; die konkrete Bewegung wird per JavaScript erzeugt -->
+<div class="ambient-pokemon-background ambient-pokemon-background--calm" id="ambientPokemonBackground"></div>
+
+<main class="center-shell">
+    <section class="registration-card wide-card report-machine">
+
+        <header class="report-machine__header">
+            <!-- Dekorative Pokédex-Lichter: aria-hidden blendet sie für Screenreader aus, weil sie keinen inhaltlichen Zweck haben -->
+            <div class="pokedex-machine__lights" aria-hidden="true">
+                <span class="pokedex-light pokedex-light--blue"></span>
+                <span class="pokedex-light pokedex-light--red"></span>
+                <span class="pokedex-light pokedex-light--yellow"></span>
+            </div>
+
+            <div>
+                <p class="retro-label">Registration Report</p>
+                <h1>Abschlussbericht</h1>
+                <p>Hier fasst das PokéMeldeamt alle gespeicherten Daten amtlich übertrieben zusammen.</p>
+            </div>
+        </header>
+
+        <div class="report-machine__body">
+
+            <!-- Systemmeldung; der Text kann über JavaScript gezielt über die id verändert werden -->
+            <p class="terminal-alert" id="systemMessage">
+                SYSTEM:<br>
+                Abschlussbericht bereit zur Erstellung.
+            </p>
+
+            <!-- Dossier-Bereich: zeigt die gespeicherten Trainer- und Pokémon-Daten vor dem finalen Bericht -->
+            <section class="report-data-panel report-dossier">
+                <div class="report-dossier__topline">
+                    <span>AKTE P-025</span>
+                    <span>STATUS: VORGEPRÜFT</span>
+                </div>
+
+                <div class="report-dossier__layout">
+
+                    <!-- Linke Dossier-Karte mit Pokémon-Bild, Namen und kurzen Zusatzinformationen -->
+                    <article class="report-dossier__main-card">
+                        <!-- Reines Deko-Element; wird deshalb für Screenreader ausgeblendet -->
+                        <div class="report-pokeball-mark" aria-hidden="true"></div>
+
+                        <div class="report-dossier__sprite-frame">
+                            <!-- Pokémon-Bild wird per JavaScript aus den gespeicherten Daten eingesetzt -->
+                            <img id="reportDossierPokemonImage" src="" alt="Registriertes Pokémon">
+                        </div>
+
+                        <p class="report-dossier__eyebrow">Registriertes Pokémon</p>
+                        <h2 id="reportPokemonName">wird geladen.</h2>
+
+                        <!-- Kleine Info-Plättchen mit Pokémon-Level, Typ und Risikoeinschätzung -->
+                        <div class="report-dossier__chips">
+                            <span>Level <strong id="reportPokemonLevel">--</strong></span>
+                            <span id="reportPokemonType">Typ</span>
+                            <span id="reportPokemonRisk">Gefahr</span>
+                        </div>
+                    </article>
+
+                    <!-- Rechte Akten-Spalte mit Trainerdaten und Prüfvermerk -->
+                    <div class="report-dossier__details">
+                        <section class="report-detail-group">
+                            <h3>Trainerakte</h3>
+
+                            <!-- Diese Werte werden aus localStorage bzw. den vorherigen Formularseiten geladen -->
+                            <div class="report-detail-row">
+                                <span>Name</span>
+                                <strong id="reportTrainerName">wird geladen.</strong>
+                            </div>
+
+                            <div class="report-detail-row">
+                                <span>Trainer-ID</span>
+                                <strong id="reportTrainerId">wird geladen.</strong>
+                            </div>
+
+                            <div class="report-detail-row">
+                                <span>Region</span>
+                                <strong id="reportTrainerRegion">wird geladen.</strong>
+                            </div>
+                        </section>
+
+                        <section class="report-detail-group">
+                            <h3>Prüfvermerk</h3>
+
+                            <!-- Ergebnis der vorherigen Sicherheitsprüfung wird hier eingesetzt -->
+                            <div class="report-detail-row">
+                                <span>Prüf-Pokémon</span>
+                                <strong id="reportSecurityPokemon">wird geladen.</strong>
+                            </div>
+
+                            <div class="report-detail-row">
+                                <span>Bearbeitung</span>
+                                <strong>amtlich unklar</strong>
+                            </div>
+
+                            <div class="report-detail-row report-detail-row--approval">
+                                <span>Freigabe</span>
+                                <strong>bedingt plausibel</strong>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Button startet die Berichtserstellung per JavaScript -->
+            <button class="btn btn-pokedex w-100" id="createReportButton">
+                Abschlussbericht erstellen
+            </button>
+
+            <!-- Meldungsbereich für Rückmeldungen während der Berichtserstellung -->
+            <p class="form-message" id="reportMessage"></p>
+
+            <!-- Finaler Bericht ist anfangs ausgeblendet und wird erst nach Klick auf den Button sichtbar -->
+            <section class="report-panel hidden" id="reportBox">
+                <div class="report-header">
+                    <span>Pokédex-Registrierungsbericht</span>
+                    <span id="reportNumber">REG----</span>
+                </div>
+
+                <div class="report-card report-card--single">
+                    <div class="report-card__content">
+                        <!-- Status, Entscheidungstext, Vorfälle und Fortschritt werden dynamisch per JavaScript erzeugt -->
+                        <p class="report-card__status" id="reportStatus">Status wird berechnet...</p>
+                        <p id="reportDecisionText"></p>
+
+                        <h3>Amtliche Zwischenfälle</h3>
+                        <ul id="reportIncidentList"></ul>
+
+                        <div class="report-progress-box">
+                            <span>Finaler Bearbeitungsstand</span>
+                            <strong id="reportFinalProgress">--%</strong>
+                        </div>
+
+                        <div class="official-stamp" id="officialStamp">REGISTRIERT</div>
+                    </div>
+                </div>
+
+                <!-- Setzt die gespeicherten Daten zurück und startet den Ablauf neu -->
+                <button class="btn btn-pokedex-outline mt-4 w-100" id="resetApplicationButton">
+                    Neue Registrierung starten
+                </button>
+            </section>
+
+        </div>
+    </section>
+</main>
+
+<!-- Vollbildbereich für fliegende Chaos-Pokémon, die per JavaScript erzeugt werden -->
+<div id="pokemonChaosArea"></div>
+
+<!-- JavaScript-Dateien: Reihenfolge ist wichtig, weil spätere Dateien Funktionen aus vorherigen Dateien verwenden -->
+<script src="../bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../js/helpers.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/backgroundPokemon.js"></script>
+<script src="../js/chaosEffects.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/pageReport.js"></script>
+<script src="../js/cursorEffects.js"></script>
+</body>
+</html>
