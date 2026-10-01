@@ -142,6 +142,12 @@ in a browser.
 
 An internet connection is required for data loaded from the PokeAPI.
 
+## 🌐 Live Demo
+
+The project is available via GitHub Pages.
+
+> Note: The application loads Pokémon data from the external PokeAPI. Networks that intercept or restrict HTTPS traffic may block these requests.
+
 ## ⚠️ About the UX
 
 The confusing navigation, visual effects and inconvenient interactions are intentional.
