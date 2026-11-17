@@ -1,54 +1,58 @@
 # 🎨 Bad UI – PokéMeldeamt
 
-An intentionally frustrating multi-page web application built to explore JavaScript, API integration and user interaction by deliberately breaking common UX conventions.
+My first frontend project, developed during my software development training at CODERS.BAY.
 
-The project was developed during my software development training at CODERS.BAY. The goal was to build a functional application while intentionally creating an unnecessarily complicated and chaotic user experience.
+PokéMeldeamt is an intentionally frustrating multi-page web application that simulates an overly bureaucratic Pokémon registration process.
 
-Behind the deliberately bad UX, the application uses structured JavaScript, dynamic DOM manipulation and data from an external REST API.
+The challenge was to develop a functional application while deliberately breaking common UX conventions.
 
-## 🚀 What the application does
+Behind the chaotic interface, the application uses structured JavaScript, dynamic DOM manipulation, browser storage and external API integration.
 
-PokéMeldeamt simulates an overly bureaucratic Pokémon registration process.
+🌐 **[Try the Live Demo](https://jennifer-wagner-dev.github.io/bad-ui-web-project/)**
 
-Users move through several steps of the registration workflow while the interface deliberately introduces confusing interactions and unexpected behaviour.
+> The unconventional design and inconvenient interactions are intentional and part of the Bad UI exercise.
 
-Features include:
+## 🚀 Features
 
-- selecting Pokémon from the first generation
-- retrieving Pokémon data from the external PokeAPI
-- displaying Pokémon information dynamically
-- a multi-page registration workflow
-- storing progress and user data in the browser session
-- dynamic forms and user interactions
-- intentionally inconvenient UI behaviour
-- animated background elements and cursor effects
-- random visual and interaction effects
-- a final registration report
+- Selection of Pokémon from the first generation
+- Integration of the external PokéAPI
+- Dynamic presentation of Pokémon information
+- Multi-page registration workflow
+- Browser-based session management
+- Dynamic forms and event handling
+- Animated backgrounds and cursor effects
+- Random visual and interaction effects
+- Generation of a final registration report
 
-## 🛠 Tech Stack
+## 🛠 Technologies & Concepts
 
 - HTML5
 - CSS3
 - JavaScript
 - Bootstrap
 - REST APIs
-- PokeAPI
+- PokéAPI
+- Fetch API
+- Promises and async/await
+- DOM manipulation
+- Event handling
 - Browser Session Storage
 
 ## 🔌 API Integration
 
-The project uses the public **PokeAPI** to retrieve data for the first 151 Pokémon.
+The application retrieves data for the first 151 Pokémon through the public PokéAPI.
 
-The API layer handles tasks such as:
+The API layer is responsible for:
 
-- asynchronous requests using `fetch()` and `async/await`
-- checking HTTP responses
-- handling failed requests
-- converting larger API responses into smaller application-specific objects
-- loading Pokémon names, IDs, sprites and types
-- caching the Pokédex list during the current session
+- Sending asynchronous HTTP requests using `fetch()`
+- Processing responses with `async/await`
+- Checking HTTP response status
+- Handling unsuccessful requests
+- Transforming API responses into application-specific data structures
+- Retrieving Pokémon names, IDs, sprites and types
+- Caching the Pokédex list during the current session
 
-Example of the simplified data structure used inside the application:
+Example of a simplified Pokémon data structure used within the application:
 
 ```javascript
 {
@@ -59,38 +63,29 @@ Example of the simplified data structure used inside the application:
 }
 ```
 
-## 🧩 JavaScript Structure
+## 🧩 JavaScript Architecture
 
-Instead of keeping all functionality in one script, the JavaScript is separated into files with different responsibilities:
+The JavaScript functionality is separated into multiple files with dedicated responsibilities.
 
-```text
-js/
-├── api.js
-├── backgroundPokemon.js
-├── chaosEffects.js
-├── cursorEffects.js
-├── helpers.js
-├── page.js
-├── pagePokemon.js
-├── pageReport.js
-├── pageTest.js
-└── pageTrainer.js
-```
+| File | Responsibility |
+| --- | --- |
+| `api.js` | API communication and data transformation |
+| `helpers.js` | Shared utility functions and session data |
+| `pagePokemon.js` | Pokémon selection workflow |
+| `pageTrainer.js` | Trainer registration |
+| `pageTest.js` | Registration test |
+| `pageReport.js` | Final registration report |
+| `chaosEffects.js` | Intentionally inconvenient interactions |
+| `backgroundPokemon.js` | Dynamic background effects |
+| `cursorEffects.js` | Custom cursor interactions |
 
-Examples:
-
-- **api.js** – communication with the PokeAPI and data transformation
-- **helpers.js** – shared utility functions and session data
-- **page-specific scripts** – logic for individual steps of the registration process
-- **chaosEffects.js** – deliberately inconvenient UI interactions
-- **backgroundPokemon.js** – dynamic visual background behaviour
-- **cursorEffects.js** – custom cursor interactions
+This structure helped me organise JavaScript functionality across multiple pages instead of placing all application logic in a single script.
 
 ## 💾 State Management
 
-The application uses `sessionStorage` to keep information available while the user moves between the different pages of the registration process.
+The application uses `sessionStorage` to maintain registration data while users navigate between different HTML pages.
 
-This allowed me to practise maintaining application state across multiple HTML documents without using a backend.
+This enabled me to practise managing application state across multiple documents without requiring a backend or database.
 
 ## 📁 Project Structure
 
@@ -107,6 +102,16 @@ bad-ui-web-project/
 │   ├── layout.css
 │   └── pokedex.css
 ├── js/
+│   ├── api.js
+│   ├── backgroundPokemon.js
+│   ├── chaosEffects.js
+│   ├── cursorEffects.js
+│   ├── helpers.js
+│   ├── page.js
+│   ├── pagePokemon.js
+│   ├── pageReport.js
+│   ├── pageTest.js
+│   └── pageTrainer.js
 ├── bootstrap/
 ├── fonts/
 └── img/
@@ -114,44 +119,40 @@ bad-ui-web-project/
 
 ## 🧠 What I Learned
 
-This project gave me the opportunity to work on a larger frontend application where several pages and JavaScript modules need to work together.
+As my first frontend project, PokéMeldeamt allowed me to apply fundamental web development concepts in a complete, interactive application.
 
-A particularly useful part of the project was integrating an external REST API. I learned how to retrieve asynchronous data, handle unsuccessful requests and transform API responses into structures that are easier for the application to use.
+Through this project, I gained practical experience in:
 
-I also gained more experience with DOM manipulation, event handling and maintaining data between pages using browser storage.
+- Structuring multi-page web applications
+- Integrating external REST APIs
+- Working with asynchronous JavaScript
+- Handling API responses and errors
+- Dynamically manipulating the DOM
+- Implementing event-driven interactions
+- Managing application state through browser storage
+- Separating JavaScript functionality into reusable files
 
-The unusual project requirement also made me think more consciously about usability. Deliberately designing inconvenient interactions made it easier to recognise why consistency, clear feedback and predictable behaviour are important in real applications.
+The unusual project requirement also strengthened my understanding of usability.
+
+Deliberately breaking UX conventions helped me recognise the importance of consistency, clear feedback and predictable behaviour in real-world applications.
 
 ## ▶️ Running the Project
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/jennifer-wagner-dev/bad-ui-web-project.git
+cd bad-ui-web-project
 ```
 
-2. Open the repository.
+Open `html/index.html` in a browser.
 
-3. Open:
-
-```text
-html/index.html
-```
-
-in a browser.
-
-An internet connection is required for data loaded from the PokeAPI.
-
-## 🌐 Live Demo
-
-The project is available via GitHub Pages.
-
-> Note: The application loads Pokémon data from the external PokeAPI. Networks that intercept or restrict HTTPS traffic may block these requests.
+An internet connection is required to retrieve Pokémon data from the external API.
 
 ## ⚠️ About the UX
 
-The confusing navigation, visual effects and inconvenient interactions are intentional.
+The confusing navigation, visual effects and inconvenient interactions are deliberate.
 
-This project was specifically designed as a **Bad UI exercise**. The goal was to create poor usability deliberately while keeping the underlying application functional.
+This project was specifically designed as a Bad UI exercise. The objective was to explore frontend development while intentionally creating poor usability.
 
 In production software, I would of course aim for the exact opposite. 😄
